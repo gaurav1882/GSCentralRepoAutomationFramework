@@ -6,8 +6,6 @@
       <class name="com.qa.testcases.Login">
         <methods>
           <include name="tearDown"/>
-          <include name="verifyWithoutLoginCredentials"/>
-          <include name="verifyLoginValidEmailAndInvalidPassword"/>
           <include name="setUp"/>
           <include name="verifyLoginValidCredentails"/>
         </methods>
