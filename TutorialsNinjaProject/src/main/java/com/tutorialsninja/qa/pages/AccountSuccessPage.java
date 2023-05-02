@@ -9,8 +9,8 @@ public class AccountSuccessPage {
 	
 	WebDriver driver;
 	
-	@FindBy(xpath="//h1[contains(text(),'Your Account Has Been Created!')]")
-	WebElement accountSuccesspageHeading;
+	@FindBy(xpath="//div[@id='content']/h1")
+	WebElement accountSuccessPageHeading;
 
 	public AccountSuccessPage(WebDriver driver) {
 		
@@ -21,7 +21,7 @@ public class AccountSuccessPage {
 	//Actions
 	
 	public String retrieveAccountSuccessPageHeading() {
-		String accountSuccesspageHeadingText = accountSuccesspageHeading.getText();
+		String accountSuccesspageHeadingText = accountSuccessPageHeading.getText();
 		return accountSuccesspageHeadingText;
 	}
 			

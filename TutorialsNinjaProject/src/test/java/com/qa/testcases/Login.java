@@ -19,6 +19,7 @@ public class Login extends BaseClass {
 	}
 
 	WebDriver driver;
+	LoginPage loginPage;
 
 	@BeforeMethod
 	public void setUp() {
@@ -28,7 +29,7 @@ public class Login extends BaseClass {
 		driver = initializeBrowserAndOpenApplicationURL(prop.getProperty("browser"));
 		HomePage homePage = new HomePage(driver);
 		homePage.clickOnMyAccount();
-		homePage.selectLoginOption();
+		loginPage = homePage.selectLoginOption();
 	}
 
 	@AfterMethod
@@ -39,12 +40,9 @@ public class Login extends BaseClass {
 	@Test(priority = 1, dataProvider = "ValidCredentialSupplier")
 	public void verifyLoginValidCredentails(String email, String password) {
 
-		LoginPage loginPage = new LoginPage(driver);
 		loginPage.enterEmailAddress(email);
 		loginPage.enterPassword(password);
-		loginPage.clickOnLoginButton();
-
-		AccountPage accountPage = new AccountPage(driver);
+		AccountPage accountPage = loginPage.clickOnLoginButton();
 		Assert.assertTrue(accountPage.getDisplayStatusOfEditYourAccountInfo());
 	}
 
@@ -58,7 +56,6 @@ public class Login extends BaseClass {
 	@Test(priority = 2)
 	public void verifyLoginInvalidCredentails() {
 
-		LoginPage loginPage = new LoginPage(driver);
 		loginPage.enterEmailAddress(Utilities.generateEmailWithTimeStamp());
 		loginPage.enterPassword(dataProp.getProperty("invalidPassword"));
 		loginPage.clickOnLoginButton();
@@ -71,7 +68,6 @@ public class Login extends BaseClass {
 
 	@Test(priority = 3)
 	public void verifyLoginInvalidEmailAndValidPassword() {
-		LoginPage loginPage = new LoginPage(driver);
 		loginPage.enterEmailAddress(Utilities.generateEmailWithTimeStamp());
 		loginPage.enterPassword(prop.getProperty("validPassword"));
 		loginPage.clickOnLoginButton();
@@ -84,7 +80,6 @@ public class Login extends BaseClass {
 
 	@Test(priority = 4)
 	public void verifyLoginValidEmailAndInvalidPassword() {
-		LoginPage loginPage = new LoginPage(driver);
 		loginPage.enterEmailAddress(prop.getProperty("validEmail"));
 		loginPage.enterPassword(dataProp.getProperty("invalidPassword"));
 		loginPage.clickOnLoginButton();
@@ -97,9 +92,7 @@ public class Login extends BaseClass {
 	@Test(priority = 5)
 	public void verifyWithoutLoginCredentials() {
 
-		LoginPage loginPage = new LoginPage(driver);
 		loginPage.clickOnLoginButton();
-
 		String actualWarningMessage = loginPage.retrieveEmailpasswordNotMatchingWarningMessageText();
 		System.out.println(actualWarningMessage + "***********");
 		String expectedWarningMessage = dataProp.getProperty("emailPasswordNoMatchWarning");

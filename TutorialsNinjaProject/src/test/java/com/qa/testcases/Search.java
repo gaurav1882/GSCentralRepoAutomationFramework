@@ -8,12 +8,15 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.tutorialsninja.qa.base.BaseClass;
+import com.tutorialsninja.qa.pages.HomePage;
+import com.tutorialsninja.qa.pages.SearchPage;
 
 public class Search extends BaseClass {
 	public Search() {
 		super();
 	}
 	WebDriver driver;
+	SearchPage searchPage;
 
 	@AfterMethod
 	public void tearDown() {
@@ -25,27 +28,26 @@ public class Search extends BaseClass {
 	}
 	@Test(priority = 1)
 	public void verifySearchWithValidProduct() {
-
-		driver.findElement(By.xpath("//header/div[1]/div[1]/div[2]/div[1]/input[1]")).sendKeys(dataProp.getProperty("validProduct"));
-		driver.findElement(By.xpath("//header/div[1]/div[1]/div[2]/div[1]/span[1]/button[1]")).click();
-		Assert.assertTrue(driver.findElement(By.xpath("//a[contains(text(),'HP LP3065')]")).isDisplayed());
+		HomePage homePage = new HomePage(driver);
+		homePage.enterProductInSearch(dataProp.getProperty("validProduct"));
+		searchPage = homePage.clickOnSearchButton();
+		Assert.assertTrue(searchPage.displayStatusOfValidProduct(), "Valid Product HP is not displayed");
 	}
 	@Test(priority = 2)
 	public void verifySearchWithInValidProduct() {
-
-		driver.findElement(By.xpath("//header/div[1]/div[1]/div[2]/div[1]/input[1]")).sendKeys(dataProp.getProperty("invalidProduct"));
-		driver.findElement(By.xpath("//header/div[1]/div[1]/div[2]/div[1]/span[1]/button[1]")).click();
-		String actualSearchMessage = driver.findElement(By.xpath("//p[contains(text(),'There is no product that matches the search criter')]")).getText();
-		Assert.assertEquals(actualSearchMessage, dataProp.getProperty("noProductTextInSearchResults"), "The actual search message is not displayed");
+		
+		HomePage homePage = new HomePage(driver);
+		homePage.enterProductInSearch(dataProp.getProperty("invalidProduct"));
+		searchPage = homePage.clickOnSearchButton();
+		String actualSearchMessage = searchPage.retrieveNoProductMessageText();
+		Assert.assertEquals(actualSearchMessage,"//div[contains(@class,'alert-dismissible')]", "The actual search message is not displayed");
 	}
 
-	@Test(priority = 3)
+	@Test(priority = 3,dependsOnMethods={"verifySearchWithInValidProduct"})
 	public void verifySearchWithNoProductName() {
-
-		driver.findElement(By.xpath("//header/div[1]/div[1]/div[2]/div[1]/input[1]")).sendKeys("");
-		driver.findElement(By.xpath("//header/div[1]/div[1]/div[2]/div[1]/span[1]/button[1]")).click();
-		String actualSearchMessage = driver .findElement(By.xpath("//p[contains(text(),'There is no product that matches the search criter')]")).getText();
+		HomePage homePage = new HomePage(driver);
+		searchPage = homePage.clickOnSearchButton();
+		String actualSearchMessage = searchPage.retrieveNoProductMessageText();
 		Assert.assertEquals(actualSearchMessage, dataProp.getProperty("noProductTextInSearchResults"), "The actual search message is not displayed");
-
 	}
 }
