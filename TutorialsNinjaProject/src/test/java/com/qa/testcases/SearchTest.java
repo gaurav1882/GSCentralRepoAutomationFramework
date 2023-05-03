@@ -38,8 +38,9 @@ public class SearchTest extends BaseClass {
 		HomePage homePage = new HomePage(driver);
 		homePage.enterProductInSearch(dataProp.getProperty("invalidProduct"));
 		searchPage = homePage.clickOnSearchButton();
+		
 		String actualSearchMessage = searchPage.retrieveNoProductMessageText();
-		Assert.assertEquals(actualSearchMessage,"//div[contains(@class,'alert-dismissible')]", "The actual search message is not displayed");
+		Assert.assertEquals(actualSearchMessage,dataProp.getProperty("noProductTextInSearchResults"), "The actual search message is not displayed");
 		//removed dataProp.getProperty to fail this TC intentionally above, just gave the xpath.
 	}
 
