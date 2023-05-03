@@ -1,6 +1,5 @@
 package com.qa.testcases;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
@@ -14,7 +13,7 @@ import com.tutorialsninja.qa.pages.RegisterPage;
 import com.tutorialsninja.qa.utils.Utilities;
 
 public class Register extends BaseClass {
-	WebDriver driver;
+	public WebDriver driver;
 	RegisterPage registerPage;
 	AccountSuccessPage accountSuccessPage;
 

@@ -18,7 +18,7 @@ public class Login extends BaseClass {
 		super();
 	}
 
-	WebDriver driver;
+	public WebDriver driver;
 	LoginPage loginPage;
 
 	@BeforeMethod

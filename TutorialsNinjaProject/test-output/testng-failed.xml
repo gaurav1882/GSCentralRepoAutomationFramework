@@ -9,8 +9,8 @@
       <class name="com.qa.testcases.Search">
         <methods>
           <include name="tearDown"/>
-          <include name="setUp"/>
           <include name="verifySearchWithNoProductName"/>
+          <include name="setUp"/>
           <include name="verifySearchWithInValidProduct"/>
         </methods>
       </class> <!-- com.qa.testcases.Search -->

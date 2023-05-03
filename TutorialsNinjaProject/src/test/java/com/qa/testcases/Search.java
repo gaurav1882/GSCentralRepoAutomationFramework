@@ -1,6 +1,5 @@
 package com.qa.testcases;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
@@ -15,7 +14,7 @@ public class Search extends BaseClass {
 	public Search() {
 		super();
 	}
-	WebDriver driver;
+	public WebDriver driver;
 	SearchPage searchPage;
 
 	@AfterMethod
@@ -41,6 +40,7 @@ public class Search extends BaseClass {
 		searchPage = homePage.clickOnSearchButton();
 		String actualSearchMessage = searchPage.retrieveNoProductMessageText();
 		Assert.assertEquals(actualSearchMessage,"//div[contains(@class,'alert-dismissible')]", "The actual search message is not displayed");
+		//removed dataProp.getProperty to fail this TC intentionally above, just gave the xpath.
 	}
 
 	@Test(priority = 3,dependsOnMethods={"verifySearchWithInValidProduct"})
