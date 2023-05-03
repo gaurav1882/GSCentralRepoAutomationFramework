@@ -2,7 +2,7 @@ package com.qa.testcases;
 
 import org.openqa.selenium.WebDriver;
 
-//Updated comment
+//Updated comment - Added more details refactored
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
