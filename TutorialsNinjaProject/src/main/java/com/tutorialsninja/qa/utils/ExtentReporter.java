@@ -11,30 +11,22 @@ import com.aventstack.extentreports.reporter.configuration.Theme;
 public class ExtentReporter {
 	
 	public static ExtentReports generateExtentReport() {
-		
 		ExtentReports extentReport = new ExtentReports();
-		
 		File extentReportFile = new File(System.getProperty("user.dir")+"\\test-output\\ExtentReports\\extentReport.html");
 		ExtentSparkReporter sparkReporter = new ExtentSparkReporter(extentReportFile);
-		
 		//Below are extent report configurations
-		
 		sparkReporter.config().setTheme(Theme.DARK);
 		sparkReporter.config().setReportName("Tutorials Ninja Test Automation Results report");
 		sparkReporter.config().setDocumentTitle("TN Automation Project");
 		sparkReporter.config().setTimeStampFormat("dd/MM/YYYY hh:mm:ss");
 		extentReport.attachReporter(sparkReporter);
-		
 		Properties configProp = new Properties();
 		File configPropFile = new File(System.getProperty("user.dir")+"\\src\\main\\java\\com\\tutorialsninja\\qa\\config\\config.properties");
-		
 		try {
 		FileInputStream fisConfigProp = new FileInputStream(configPropFile);
 		configProp.load(fisConfigProp);
 		}catch(Throwable e) {e.getStackTrace();
-			
 		}
-		
 		extentReport.setSystemInfo("Application URL", configProp.getProperty("url"));
 		extentReport.setSystemInfo("Browser Name", configProp.getProperty("browser"));
 		extentReport.setSystemInfo("Email", configProp.getProperty("validEmail"));
@@ -43,7 +35,5 @@ public class ExtentReporter {
 		extentReport.setSystemInfo("Username",System.getProperty("user.name"));
 		extentReport.setSystemInfo("Java Version", System.getProperty("java.version"));
 		return extentReport;
-		
 	}
-
 }

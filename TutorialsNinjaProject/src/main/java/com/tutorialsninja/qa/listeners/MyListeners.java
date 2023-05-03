@@ -1,5 +1,6 @@
 package com.tutorialsninja.qa.listeners;
 
+import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 
@@ -18,28 +19,28 @@ import com.tutorialsninja.qa.utils.ExtentReporter;
 
 public class MyListeners implements ITestListener{
 	
+	//Global Variables
 	ExtentReports extentReport;
 	ExtentTest extentTest;
+	String testName;
 	
 	@Override
 	public void onStart(ITestContext context) {
-	
 		extentReport = ExtentReporter.generateExtentReport();
 	}
 
 	@Override
 	public void onTestStart(ITestResult result) {
 	
-		String testName = result.getName();
+		testName = result.getName();
 		extentTest = extentReport.createTest(testName);
 		extentTest.log(Status.INFO, testName+ "Started Executing");
-		
 	}
 
 	@Override
 	public void onTestSuccess(ITestResult result) {
 		
-		String testName = result.getName();
+		testName = result.getName();
 		extentTest.log(Status.PASS, testName+ "Got successfully executed");
 	}
 
@@ -47,7 +48,7 @@ public class MyListeners implements ITestListener{
 	public void onTestFailure(ITestResult result) {
 		
 		WebDriver driver=null;
-		String testName = result.getName();
+		testName = result.getName();
 		try {
 			driver = (WebDriver)result.getTestClass().getRealClass().getDeclaredField("driver").get(result.getInstance());
 		} catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
@@ -68,7 +69,7 @@ public class MyListeners implements ITestListener{
 
 	@Override
 	public void onTestSkipped(ITestResult result) {
-		String testName = result.getName();
+		testName = result.getName();
 		extentTest.log(Status.INFO, result.getThrowable());
 		extentTest.log(Status.SKIP, testName+"Got skipped");
 	}
@@ -76,7 +77,17 @@ public class MyListeners implements ITestListener{
 	@Override
 	public void onFinish(ITestContext context) {
 		extentReport.flush();
-		System.out.println("Finished executing project test");
+		//Below code for opening the extent report automatically on desktop
+		String pathOfExtentReport = System.getProperty("user.dir")+"\\test-output\\ExtentReports\\extentReport.html";
 		
+		File extentReport = new File(pathOfExtentReport);
+		try {
+			Desktop.getDesktop().browse(extentReport.toURI());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		System.out.println("Finished executing project test");
 	}
+	
+	
 }

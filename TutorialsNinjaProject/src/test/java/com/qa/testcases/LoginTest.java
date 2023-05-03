@@ -13,8 +13,8 @@ import com.tutorialsninja.qa.pages.HomePage;
 import com.tutorialsninja.qa.pages.LoginPage;
 import com.tutorialsninja.qa.utils.Utilities;
 
-public class Login extends BaseClass {
-	public Login() {
+public class LoginTest extends BaseClass {
+	public LoginTest() {
 		super();
 	}
 
@@ -48,7 +48,6 @@ public class Login extends BaseClass {
 
 	@DataProvider(name = "ValidCredentialSupplier")
 	public Object[][] supplyTestData() {
-
 		Object[][] data = Utilities.getTestdDataFromExcel("Login");
 		return data;
 	}
